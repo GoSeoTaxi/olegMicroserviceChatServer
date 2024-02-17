@@ -19,10 +19,9 @@ type server struct {
 
 // RunService запускает сервис Auth
 func RunService() {
+	cfg := config.NewConfig()
 
-	config := config.NewConfig()
-
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", config.Port))
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.Port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
@@ -40,21 +39,7 @@ func RunService() {
 }
 
 func (s *server) SendMessage(ctx context.Context, req *desc.SendMessageRequest) (*emptypb.Empty, error) {
-
 	log.Printf("%+v \n", req)
 
 	return &emptypb.Empty{}, nil
 }
-
-/*
-proto test
-{
-  "from": "John",
-  "text": "Hello, world!",
-  "timestamp": {
-    "seconds": 1645959200,
-    "nanos": 999
-  }
-}
-
-*/
